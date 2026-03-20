@@ -3,6 +3,10 @@ import json
 from anthropic import Anthropic
 import os
 
+if not os.getenv("ANTHROPIC_API_KEY"):
+    print("Error: ANTHROPIC_API_KEY enviroment variable not set")
+    sys.exit(1)
+
 client = Anthropic()
 
 system_prompt = """You are a biomedical research assistant. Given a paper abstract, extract and return ONLY a valid JSON object with the following fields:
