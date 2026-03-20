@@ -19,9 +19,18 @@ system_prompt = """You are a biomedical research assistant. Given a paper abstra
 
 Return only raw JSON, no other text, no markdown, no backticks. Start your response with { and end with }.
 """
+if len(sys.argv) < 2:
+    print("Usage: uv run main.py <path_to_abstract>")
+    sys.exit(1)
+
 file_path = sys.argv[1]
-with open(file_path, "r") as f:
-    abstract = f.read()
+
+try:
+    with open(file_path, "r") as f:
+        abstract = f.read()
+except FileNotFoundError:
+    print(f"Error:file '{file_path}' not found")
+    sys.exit(1)
 
 message = client.messages.create(
     model="claude-sonnet-4-6",
